@@ -1544,3 +1544,132 @@ function oyunaBasla() {
 *   **Hızla Teslim:** Bugün **4 Mayıs** ve vize yoğunluğun bitti. Bu hataları temizlersen oyunun açılacak ve hemen asıl mekanikleri (sürükle-bırak) test etmeye başlayabileceksin[cite: 1].
 
 Bu `let` çakışmasını giderdiğinde butonun tekrar çalışmaya başlayacaktır.
+## 12
+# Prompt
+bir eşya koyunca bu hatayı alıyorum düzgün dengeyi hesaplamıyor
+# Cevap
+"Ekran görüntüsü 2026-05-09 203816.jpg" dosyasına baktığımda, tek bir bal kavanozu koyar koymaz oyunun bitmesinin sebebi MAX_MOMENT değerinin çok düşük kalması veya sepet merkezine olan uzaklığın çok yüksek hesaplanmasıdır. Bal kavanozu 15 birim ağırlığında olduğu için, sepetin en soluna konulduğunda büyük bir moment yaratıyor ve dengeyi anında %30'un altına düşürüyor.
+
+Bu sorunu çözmek için dengeKontrolEt ve dengeBariniCiz fonksiyonlarında şu düzenlemeleri yapmalısın:
+
+1. MAX_MOMENT Değerini Yükselt
+Şu anki hesaplamana göre tek bir eşya bile sınırı aşıyor. Bu değeri artırarak oyunu daha oynanabilir hale getirebilirsin.
+
+JavaScript
+```
+const MAX_MOMENT = 2000; // 500 olan değeri 2000 veya 3000 yaparak pay bırak
+```
+2. dengeKontrolEt Fonksiyonunu Optimize Et
+Mesafe hesabında px cinsinden değerler çok büyük çıktığı için ağırlıkla çarpılınca moment kontrolsüz büyüyor. Uzaklığı bir katsayıya bölerek normalize edebiliriz.
+
+JavaScript
+```
+function dengeKontrolEt() {
+    let toplamMoment = 0;
+    let sepetMerkeziX = ormanSinir + (sepetSinir - ormanSinir) / 2;
+
+    yerlesmisEsyalar.forEach(esya => {
+        // Eşyanın sepet merkezinden ne kadar uzakta olduğunu bul
+        let uzaklik = (esya.x + 30) - sepetMerkeziX;
+        
+        // Moment hesabını biraz daha esnek hale getirmek için uzaklığı normalize et
+        toplamMoment += esya.agirlik * (uzaklik / 10); 
+    });
+    return toplamMoment;
+}
+3. Barın Görselleşmesini Düzelt
+Görselde barın içindeki "Denge: %100" yazısı üst üste binmiş görünüyor. dengeBariniCiz fonksiyonunda metin koordinatlarını ve temizleme işlemini şu şekilde güncelle:
+
+JavaScript
+function dengeBariniCiz(moment) {
+    const barGenislik = 200;
+    const barYukseklik = 25;
+    const barX = 20;
+    const barY = 40;
+
+    // Yüzde hesabını yap (MAX_MOMENT ne kadar büyükse o kadar zor biter)
+    let dengeOrani = Math.max(0, 100 - (Math.abs(moment) / MAX_MOMENT) * 100);
+
+    ctx.save();
+    ctx.setTransform(1, 0, 0, 1, 0, 0); // Diğer rotasyonlardan etkilenmemesi için sıfırla
+
+    // Bar çerçevesi
+    ctx.fillStyle = "rgba(0, 0, 0, 0.3)";
+    ctx.fillRect(barX, barY, barGenislik, barYukseklik);
+
+    // Dinamik renk değişimi
+    let renk = dengeOrani > 60 ? "#2ecc71" : (dengeOrani > 35 ? "#f1c40f" : "#e74c3c");
+    ctx.fillStyle = renk;
+    ctx.fillRect(barX, barY, (barGenislik * dengeOrani) / 100, barYukseklik);
+
+    // Yazı yerleşimi
+    ctx.fillStyle = "black";
+    ctx.font = "bold 16px Arial";
+    ctx.textAlign = "left";
+    ctx.fillText(`Sepet Dengesi: %${Math.round(dengeOrani)}`, barX, barY - 10);
+
+    ctx.restore();
+    return dengeOrani;
+}
+```
+## 13
+# Prompt
+oyunda sepete eklediğim envanterler sepet döndükçe sepet ile hareket etmiyor ilk koyduğum yerde kalıyor bunu nasıl düzeltebilirim
+# Cevap
+Eşyaların sepetle birlikte hareket etmemesinin sebebi, sepeti döndürmek için kullandığın ctx.rotate işleminin sadece o anki çizimi etkilemesi ve eşyaların koordinatlarının sabit kalmasıdır. Eşyaların sepetin bir parçası gibi davranması için onları ctx.save() ve ctx.restore() blokları arasında, yani sepetle aynı koordinat sistemi içinde çizmelisin.
+
+Sorunu çözmek için draw() fonksiyonundaki ilgili kısmı şu şekilde güncellemen gerekiyor:
+
+1. Eşyaları Döndürme Bloğuna Al
+Sepeti döndürdüğün ctx.translate ve ctx.rotate komutlarının olduğu bölüme yerlesmisEsyalar döngüsünü de dahil etmelisin.
+
+JavaScript
+```
+function draw() {
+    ctx.clearRect(0, 0, cvs.width, cvs.height);
+    ctx.drawImage(arkaplan, 0, 0, cvs.width, cvs.height);
+
+    let moment = dengeHesapla();
+    let eglenceAcisi = moment * 0.0002; 
+    let sepetMerkeziX = ormanSinir + (sepetSinir - ormanSinir) / 2;
+    let sepetMerkeziY = cvs.height / 2;
+
+    // --- DÖNDÜRME BAŞLANGICI ---
+    ctx.save(); 
+    
+    // Canvas'ı sepetin merkezine göre döndürüyoruz
+    ctx.translate(sepetMerkeziX, sepetMerkeziY);
+    ctx.rotate(eglenceAcisi);
+    ctx.translate(-sepetMerkeziX, -sepetMerkeziY);
+
+    // 1. Sepeti çiz (Artık sepet eğiliyor)
+    ctx.drawImage(sepet, ormanSinir, 20, sepetSinir - ormanSinir, cvs.height - 40);
+    
+    // 2. Izgarayı çiz (Sepetle beraber eğilmesi için burada olmalı)
+    // (Izgara çizim kodlarını buraya taşıyın)
+
+    // 3. SEPETE YERLEŞMİŞ EŞYALARI ÇİZ
+    // Bunları restore() fonksiyonundan önce çizdiğimiz için sepetle beraber dönecekler
+    yerlesmisEsyalar.forEach(kopya => {
+        ctx.drawImage(kopya.img, kopya.x, kopya.y, 60, 60);
+    });
+
+    ctx.restore(); 
+    // --- DÖNDÜRME BİTİŞİ ---
+
+    // Sürüklenen eşya ve envanter paneli dışarıda kalmalı (Onlar eğilmemeli)
+    if (secili) {
+        ctx.drawImage(secili.img, secili.x, secili.y, 60, 60);
+    }
+
+    // Denge barı ve Winnie çizimleri...
+}
+```
+Neden Bu Değişiklik Gerekiyordu?
+Koordinat Sistemi: ctx.rotate kullandığında tüm canvas'ın "kağıdını" döndürmüş olursun. Eğer eşyaları bu döndürme işleminden sonra (yani restore() komutundan sonra) çizersen, onlar düz olan eski koordinat sistemine göre çizilirler.
+
+Görsel Bağlılık: Eşyaları save() ve restore() arasına aldığında, onlar sepetin üzerindeki birer "etiket" gibi davranır. Sepet ne kadar dönerse, içindeki yerlesmisEsyalar da o açıyla çizilir.
+
+Önemli İpucu:
+Izgara (krem arka plan ve çizgiler) çizim kodlarını da mutlaka bu save-restore bloğunun içine, sepet çiziminden hemen sonraya koymalısın. Aksi takdirde sepet dönerken ızgara çizgileri arkada sabit ve yamuk duracaktır.
+
