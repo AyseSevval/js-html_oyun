@@ -54,12 +54,12 @@ Proje sunucu gerektirmez, doğrudan tarayıcıda açabilirsiniz. Projeyi klonlay
 
 ## 🎵 Ses Varlıkları (Harici Bağlantılar)
 
-| Oynatıcı (Önizleme) | Ses Adı | Doğrudan Bağlantı |
-| :---: | :--- | :--- |
-| <audio src="assets/sesler/fon.mp3"></audio> | **Fon Müziği** | [Dosyayı Aç / İndir](https://example.com/ses1.mp3) |
-| <audio src="assets/sesler/yerlesim.mp3"></audio> | **Yerleşim Sesi** | [Dosyayı Aç / İndir](https://example.com/ses2.mp3) |
-| <audio src="assets/sesler/level.mp3"></audio> | **Level Atlama** | [Dosyayı Aç / İndir](https://example.com/ses3.mp3) |
-| <audio src="assets/sesler/bitis.mp3"></audio> | **Bitiş Sesi** | [Dosyayı Aç / İndir](https://example.com/ses4.mp3) |
+ | Ses Adı | Doğrudan Bağlantı |
+ | :--- | :--- |
+ | **Fon Müziği** | [Dosyayı Aç / İndir](https://example.com/ses1.mp3) |
+ | **Yerleşim Sesi** | [Dosyayı Aç / İndir](https://example.com/ses2.mp3) |
+ | **Level Atlama** | [Dosyayı Aç / İndir](https://example.com/ses3.mp3) |
+ | **Bitiş Sesi** | [Dosyayı Aç / İndir](https://example.com/ses4.mp3) |
 
 
 
