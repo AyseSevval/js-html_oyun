@@ -16,7 +16,9 @@ Oyundaki temel amaç, sepetin dengesini koruyarak sağ tarafta bulunan malzemele
 <h4>Sürükle-Bırak:</h4> Eşyalar fare ile sürükleme sayesinde istediğiniz bir noktaya yerleştirilebilir. <br>
 
 <h2>Oyun İçi Görüntüler</h2> <br>
-<br>
+<img width="959" height="410" alt="yesil" src="https://github.com/user-attachments/assets/dd1fe2f4-35db-4b19-ad76-4c4499016156" />
+<img width="958" height="412" alt="kırmızı" src="https://github.com/user-attachments/assets/e023d928-95b9-49bb-b98c-3c8977737e50" />
+<img width="959" height="413" alt="basari" src="https://github.com/user-attachments/assets/8c3a2ea9-97e3-4d86-87bb-2acb5a241c0e" />
 
 <h2>Teknik Özellikler</h2>
 <h4>Kullanılan Diller:</h4> HTML5, CSS3, JavaScript <br>
@@ -37,24 +39,24 @@ Proje sunucu gerektirmez, doğrudan tarayıcıda açabilirsiniz. Projeyi klonlay
 <li>Noah’s Arks: https://diadas.itch.io/noahs-arks</li>
 
 <h2>Projede Kullanılan Görseller ve Sesler</h2>
-<h4>Görseller</h4><br> 
-<img width="1600" height="1032" alt="giris" src="https://github.com/user-attachments/assets/f6d1f8d8-bbb5-48f7-9728-2b127e8e38cc" />
-<img width="736" height="518" alt="arkaplan" src="https://github.com/user-attachments/assets/fb8f87a3-dd51-4121-b24c-45d8335ae751" />
-<img width="1000" height="700" alt="sepet1" src="https://github.com/user-attachments/assets/07476221-569c-4055-badf-f8894a9083b5" />
-<img width="375" height="666" alt="pooh" src="https://github.com/user-attachments/assets/5829eb71-0beb-4419-8dcc-885231285a25" />
-<img width="379" height="466" alt="balkavanozu" src="https://github.com/user-attachments/assets/df298efc-a7fc-40fc-b55d-2a6d5e194b02" />
-<img width="676" height="369" alt="tiggeryay" src="https://github.com/user-attachments/assets/be4e2fc5-e238-42af-a2dc-440657be6446" />
-<img width="676" height="369" alt="pigletatkı" src="https://github.com/user-attachments/assets/83801c37-85c0-47ba-9984-655a904540c4" />
-<img width="676" height="369" alt="tavsanhavuc" src="https://github.com/user-attachments/assets/8bc8c7cb-3ecd-4c62-b1b1-c062ceb2a193" />
-<img width="429" height="581" alt="kangurubalon" src="https://github.com/user-attachments/assets/161bab7c-d73a-4f4a-8de6-542226ea2b6a" />
-<img width="407" height="612" alt="eeyorekuyruk" src="https://github.com/user-attachments/assets/0033f02a-48ae-4977-a4b2-372ec57cf299" />
-<img width="676" height="369" alt="baykusgozluk" src="https://github.com/user-attachments/assets/0926ce56-93b7-4721-8e87-832877864b07" />
+<h4>Görseller</h4>
+![Arka Plan](assets/görseller/arkaplan.jpg) <br>
+![Giris](assets/görseller/giris.webp) <br>
+![Sepet](assets/görseller/sepet1.png) <br>
+![Pooh](assets/görseller/pooh.png) <br>
+![Bal Kavanozu](assets/görseller/balkavanozu.png) <br>
+![Tigger Yay](assets/görseller/tiggeryay.png) <br>
+![Piglet Atkı](assets/görseller/pigletatkı.png) <br>
+![Tavsan-Havuc](assets/görseller/tavsanhavuc.png) <br>
+![Kanguru Balon](assets/görseller/kangurubalon.png) <br>
+![Eeyore Kuyruk](assets/görseller/eeyorekuyruk.png) <br>
+![Baykus Gozluk](assets/görseller/baykusgozluk.png) <br>
 
-<h4>Sesler</h4><br>
-[fon.mp3](https://github.com/user-attachments/files/27647009/fon.mp3)
-[yerlesim.mp3](https://github.com/user-attachments/files/27647015/yerlesim.mp3)
-[level.mp3](https://github.com/user-attachments/files/27647019/level.mp3)
-[bitis.mp3](https://github.com/user-attachments/files/27647025/bitis.mp3)
+<h4>Sesler</h4>
+[Fon Müziği](assets/sesler/fon.mp3) <br>
+[Yerleşim Sesi](assets/sesler/yerlesim.mp3) <br>
+[Tamamen Dolma Sesi](assets/sesler/level.mp3) <br>
+[Denge Kaybı Sesi](assets/sesler/bitis.mp3) <br>
 
 
 
