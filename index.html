@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width", initial-scale="1.0">
+        <title>
+            Winnie ve Arkadaşlarının Piknik Sepeti
+        </title>
+
+         <style>
+            /*Sayfanın css bölümlerini ekliyoruz*/
+            *{
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+            }
+            
+            body,html{
+                width: 100%;
+                height: 100%;
+                overflow: hidden; /*Sayfa kayması olmasını engellemek için kullandık*/
+            }
+
+            canvas{
+                display: block;
+                width: 100vw;
+                height: 100vh;
+            }
+
+            #oyun{
+                display: block;
+                width: 100vw;
+                height: 100vh;
+            }
+
+            #giris{
+                width: 100%;
+                height: 100%;
+                background-image: url('resimler/giris.webp');
+                background-size: cover;
+                background-position: center;
+                display: flex;
+                flex-direction: column;
+                justify-content: flex-start; /*İçeriği üstten başlatmak için kullandık.*/
+                align-items: center;
+                padding-top:50px; /*Üstten 50px boşluk bıraktık.*/
+                text-align: center;
+            }
+            
+            #basla{
+                background-color: #8B4513;
+                color: white;
+                padding: 25px 50px;
+                border: 3px solid #FFFDD0;
+                border-radius: 10px;
+                font-size: 1.5rem;
+                cursor: pointer;
+                transition: 0.3s; /*Üzerine gelince yumuşak efekt vermek için*/
+                margin-top: 10px; /*Buton ile paragraf arası boşluk*/
+            }
+
+            #basla:hover{
+                background-color: #FFC107;
+                color: #8B4513;
+            }
+
+            h1{
+                color: #FFC107;
+                text-shadow: 3px 3px 6px #000000; /*Yazıların arkasına gölge ekliyoruz ki kolay okunsun*/
+                font-size: 3.5rem;
+                margin-bottom: 20px; /*Başlık ile paragraf arası boşluk*/
+            }
+
+            p{
+                color: black;
+                font-size: 1.3rem;
+                font-weight: bold;
+                max-width:700px; /*Paragrafın çok yayılmasını engeller.*/
+                line-height:1.5; /*Satır aralığını ayarlar.*/
+                margin-bottom: 30px; /*Paragraf ile buton arası boşluk*/
+            }
+
+        </style>
+
+
+    </head>
+    <body>
+
+        <!--Oyuna başlamadan önce giriş ekranı-->
+        <div id="giris" style ="text-align: center;">
+            <h1>Winnie ve Arkadaşlarının Piknik Sepeti</h1>
+            <p>Winnie ve arkadaşları piknik yapmaya karar verdiler. Ancak, piknik sepetine koyacakları malzemeler çok fazla ve dengeyi kuramıyorlar. Dengede bir sepet hazırlamak için onlara yardım etmek ister misiniz?</p>
+            <button id="basla" onclick="oyunaBasla()">Oyuna Başla</button>
+        </div>
+
+        <!--Oyuna başlamadan önce kurallar ekranı-->
+        <div id="kurallar" style="display:none; position: fixed; top:50%;left:50%; background: #FFFDD0; padding: 20px; border:5px solid #654321; text-align: center;width: 800px;border-radius: 15px;transform: translate(-50%,-50%);max-width: 80%;">
+            <h1 style="color: #8B4513;font-size: 40px;">Oyun Nasıl Oynanır?</h1>
+            <ul style="text-align: left; font-size: 20px; line-height: 1.7;">
+                <li>Malzemeler bölümünde her eşyanın ağırlığı vardır.</li>
+                <li>Sepetin dengesini bozmadan malzemeleri sepete taşı.</li>
+                <li>Izgaraya yerleştirdiğin malzemelerin yerine göre sepetin dengesi değişir.</li>
+                <li>Sepetin dengesini sol üstteki denge barından takip edebilirsin.</li>
+                <li>Denge %30'un altına düşerse oyun biter, tekrardan oynamaya başlayabilirsin!</li>
+                <li>Sepetteki kutular tamamen dolarsa oyun tekrardan başlar.</li>
+                <li>Oyun başlıyor, İYİ EĞLENCELER...</li>
+            </ul>
+            <button onclick="basla()" style="background: #8B4513; color:white; padding: 10px 20px; border:none; font-size: 15px;">Anladım, Başla</button>
+        </div>
+
+        <!--Oyun alanı açılacak ve oyun başlayacak-->
+        <div id="oyun-alani" style="display:none;">
+            <canvas id="oyun" style="border:2px solid #333;"></canvas>
+        </div>
+
+        <!--Oyun sonu çıkacak ekran tasarımı-->
+        <div id="oyun-sonu" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; flex-direction: column; justify-content: center; align-items:center; z-index: 100; background: rgba(0,0,0,0.5);">
+            <div style="background: #FFFDD0; text-align: center; padding: 20px;">
+                <h1 id="son-yazi">Oyun Bitti</h1>
+                <button onclick="tekrarOyna()" style="padding: 15px 30px; font-size: 15px; border: none; background: #800020; color:white;">
+                    Tekrar Oyna
+                </button>
+            </div>
+        </div>
+
+        <script >
+            //Global değişkenleri tanımladık
+            let cvs;
+            let ctx;
+            let ormanSinir;
+            let sepetSinir;
+
+            let winnieX=0;
+            let winnieY=0;
+
+            let oyunBitti=false;
+            
+            //Oyuna başlamak için girişi gizleyip kuralları görünür kılıyoruz
+            function oyunaBasla(){
+            document.getElementById("giris").style.display="none"; //Giriş ekranını gizle
+            document.getElementById("kurallar").style.display="block"; //Kurallar ekranını göster
+            }
+
+            //Canvas boyutlandırma ve sınır hesaplaması fonksiyonu
+            function canvasiBoyutlandir(){
+                cvs.width=window.innerWidth;
+                cvs.height=window.innerHeight;
+                
+                //Sınırları belirleme(ekranı orman, sepet ve envanter bölümü olmak üzere dikey olarak 3'e böldük.)
+                ormanSinir=cvs.width * 0.45; //Orman için canvas sınırı
+                sepetSinir=ormanSinir + (cvs.width * 0.40); //Sepet için canvas sınırı
+                
+                winnieY=cvs.height - 250; //Winnie'nin y kordinatını belirledik
+                
+                if(resimlerHazir){
+                    envanterDoldurma(); //Envanter bölümünü yeniden düzenle
+                }
+            }
+
+            //Oyunu başlatacak olan bölüm oyun oynama ekranına geçme 
+            function basla(){
+            document.getElementById("kurallar").style.display="none"; //Kuralları gizler
+    
+            //Oyun alanını görünür yapar
+            document.getElementById("oyun-alani").style.display="block";
+            
+            //Canvas oluşturma ve oyunu baslatma
+            cvs= document.getElementById("oyun");
+            ctx=cvs.getContext("2d");
+            
+            //Canvas boyutlandır
+            canvasiBoyutlandir();
+            
+            //Ekran boyutu değiştiğinde canvas'ı yeniden boyutlandir
+            window.addEventListener("resize", canvasiBoyutlandir);
+
+            fareOlaylari();
+    
+            //Arka plan müziğini kullanıcı butona bastığında aktif olacak şekilde ayarladık
+            fon.muted=false;
+            //Arka plan müziği çalarken hata oluşursa yakalamak için ekledik
+            fon.play().catch(error =>{
+            console.log("Muzik calma hatasi:", error);
+            });
+
+            console.log("Oyun oynayabilirsiniz!");
+
+            envanterDoldurma(); //Envanteri doldurma
+            oyunDongusu(); //Oyun döngüsü başlatma
+}
+
+//Resimler sabit olduğu için sabit değişken olarak tanımlamalarını yaptık
+const arkaplan=new Image();
+const sepet=new Image();
+const winnie= new Image();
+
+//Envanter nesne tanımlamaları 
+let envanter=[
+    {id:"balkavanozu", img:new Image(), src:"resimler/balkavanozu.png", agirlik: 15},
+    {id:"tiggeryay", img:new Image(), src:"resimler/tiggeryay.png", agirlik: 9},
+    {id:"pigletatki", img:new Image(), src:"resimler/pigletatkı.png", agirlik: 5},
+    {id:"tavsanhavuc", img:new Image(), src:"resimler/tavsanhavuc.png", agirlik: 3},
+    {id:"kangurubalon", img:new Image(), src:"resimler/kangurubalon.png", agirlik: 1},
+    {id:"eeyorekuyruk", img:new Image(), src:"resimler/eeyorekuyruk.png", agirlik: 11},
+    {id:"baykusgozluk", img:new Image(), src:"resimler/baykusgozluk.png", agirlik: 7},
+]
+
+//Resim yükleme kontrolü
+let yuklenenResimSayisi=0;
+const toplamResim=3+envanter.length; //Arka plan, sepet, winnie ve envanter resimleri toplamı
+let resimlerHazir=false; //Tüm resimlerin yüklendğini kontrol eder
+
+function resimYuklendi(){
+        yuklenenResimSayisi++;
+        if(yuklenenResimSayisi==toplamResim){
+            resimlerHazir=true; //Resimlerin hazir olduğunu söyler
+}
+    }
+
+//Karakter, arka plan ve envanter resimleri yükleme
+winnie.src="resimler/pooh.png";
+winnie.onload = resimYuklendi;
+
+arkaplan.src="./resimler/arkaplan.jpg";
+arkaplan.onload = resimYuklendi;
+
+sepet.src="./resimler/sepet1.png";
+sepet.onload = resimYuklendi;
+
+envanter.forEach(item => {
+    item.img.src = item.src;
+    item.img.onload = resimYuklendi;
+});
+
+//Arka plan ve oyun içi ses yükleme
+const fon=new Audio();
+fon.src="sesler/fon.mp3";
+fon.loop=true;
+fon.volume=1;
+fon.preload="auto"; //Sesi önceden yükleriz
+
+let yerlesim=new Audio();
+yerlesim.src="sesler/yerlesim.mp3";
+
+let level=new Audio();
+level.src="sesler/level.mp3";
+level.volume=1;
+
+let bitis=new Audio();
+bitis.src="sesler/bitis.mp3";
+
+let yerlesmisEsyalar=[];
+//Sabit kutu boyutu ve envanter genişliği tanımladık
+const kutuBoyutu=60;
+const envGenislik=100;
+
+function envanterDoldurma(){
+    //Envanter bölümünün çizim ölçümlerini belirliyoruz
+    let envY =60; //Başlangıç yükseklik değeri
+    let PanelMerkezi=sepetSinir+(cvs.width-sepetSinir-55)/2; //Envanter bölümünün konumunu ayarladık
+    let envX = PanelMerkezi - 30;
+    
+    //Her malzemenin ekrandaki konumunu dinamik olarak belirleriz
+    envanter.forEach((item, index) => {
+        item.x = envX; //Her eşyanın yatay konumunu envX'e sabitler
+        item.y = envY + (index * 65); //Envanter öğeleri arasında 65 piksel boşluk bırak
+    });
+}
+
+function dengeBariCiz(moment){
+    //Sabitleri tanımladık
+    const barGenislik=200;
+    const barYukseklik=30;
+    const barX=20;
+    const barY=40;
+    const MAX_MOMENT=500; //Denge limitini belirler
+    
+    //Moment değerini yüzdeye çevir(merkez 0, sapma % olacak)
+    //Moment 0 ise denge %100, moment arttıkça denge yüzdesi düşer.
+    let dengeOrani=Math.max(0, 100-(Math.abs(moment)/MAX_MOMENT)*100);
+
+    ctx.save(); //Mevcut canvas ayarlarını kaydeder
+    ctx.setTransform(1,0,0,1,0,0); //Kordinat sistemini sıfırlayıp varsayılan yapar
+
+    //Barın dış çevresini çiziyoruz
+    ctx.fillStyle="rgba(0,0,0,0.3)";
+    ctx.fillRect(barX, barY, barGenislik, barYukseklik);
+
+    //Bar iç kısım dinamik ayarlandı
+    //%60 üstü yeşil, %35-%60 arası sarı, %35 altı kırmızı olarak ayarlandı
+    let barRenk=dengeOrani>60? "#4CAF50":(dengeOrani>35? "#FFC107":"#F44336");
+    ctx.fillStyle=barRenk;
+    ctx.fillRect(barX, barY, (barGenislik*dengeOrani)/100,barYukseklik); //Belirlenen kordinatlara uygun içi dolu dikdörtgen çizer
+    //Bar genişliğini dinamik olarak hesaplarız. Denge azaldıkça dikdörtgen kısalır.
+
+    //Bar çerçevesi çizim
+    ctx.strokeStyle="black";
+    ctx.lineWidth=1;
+    ctx.strokeRect(barX,barY,barGenislik,barYukseklik);
+
+    //Metin bilgisi
+    ctx.fillStyle="white";
+    ctx.font="bold 14px Arial";
+    ctx.textAlign="center";
+    ctx.textBaseline="middle";
+    //Denge oranını en yakın yüzdeliğe yuvarlayıp hesaplar ve yazıyı yatay ve dikey olarak ortaya yerleştirir
+    ctx.fillText(`%${Math.round(dengeOrani)}`, barX+(barGenislik/2), barY+(barYukseklik/2)); 
+
+    ctx.restore(); //ctx.save ile kaydettiğimiz durumu geri yükler
+    return dengeOrani; //Hesaplanılan değeri başka fonksiyonlara döndürür
+}
+
+let mevcutHareket=0;
+
+function draw(){
+
+    ctx.clearRect(0, 0, cvs.width, cvs.height); //Ekranı temizle
+    ctx.drawImage(arkaplan, 0, 0, cvs.width, cvs.height); //Arka plan çizimi
+
+    //Oyun bittiyse çizim dursun
+    if(oyunBitti)
+        return;
+
+    //Denge kontrolü ile sepet hareketi tanımlama
+    let moment=dengeKontrolEt();
+    let dengeYuzde=dengeBariCiz(moment);
+
+    //Oyun bitiş kontrolu yap
+    if(dengeYuzde<30){
+        fon.pause();
+        bitis.currentTime=0;
+        bitis.play();
+        oyunSonuMesaj("Sepetin dengesi bozuldu. Oyunu kaybettiniz!");
+        return;
+    }
+
+    let hareket=moment * 0.0003; //Hareket miktarını momente göre hesapla(radyan cinsinden açıya dönüştürüyoruz)
+    hareket=Math.max(-0.5, Math.min(0.5, hareket)); //Sepetin çok fazla dönmemesi için sınırladık
+    mevcutHareket=hareket;
+
+    //Sepetin orta noktalarını belirleriz
+    let sepetMerkeziX= ormanSinir+(sepetSinir-ormanSinir)/2;
+    let sepetMerkeziY=cvs.height/2;
+
+    ctx.save(); //Mevcut durum kaydı
+
+    //Canvası merkezden döndürmek için kordinat sistemini taşıdık
+    ctx.translate(sepetMerkeziX, sepetMerkeziY); //Kordinatta merkez noktayı sepetin ortasına taşıdık
+    ctx.rotate(hareket); //Sepeti hareket miktarı kadar döndürme
+    ctx.translate(-sepetMerkeziX, -sepetMerkeziY); //Kordinat sistemini geri taşıma
+
+    //Izgara çizim bölümü
+    let basX=ormanSinir + 122;
+    let basY=120;
+    let kutu=68;
+
+    //Izgara arka planı
+    ctx.fillStyle="rgba(208, 186, 162, 0.8)";
+    for(let i=0; i<4; i++){
+        for(let j=0; j<5; j++){
+            ctx.fillRect(basX+ (i*kutu), basY+(j*kutu), kutu, kutu);
+        }
+    }
+
+    //Izgaranın kenarlarını çizme
+    ctx.strokeStyle="rgba(0, 0, 0, 0.2)";
+    ctx.lineWidth=2;
+
+    for(let i=0; i<=4; i++){
+        //5 dikey çizgi çizme
+        ctx.beginPath(); //Çizim yolu başlatma
+        ctx.moveTo(basX + (i*kutu), basY); //Her döngüde x bir kutu genişliği sağa kayar
+        ctx.lineTo(basX + (i*kutu), basY + (5*kutu)); //Dikey olarak çizim yapar
+        ctx.stroke(); //Belirlenen çizimi yapar
+    }
+    for(let i=0; i<=5; i++){
+        //6 yatay çizgi çizme
+        ctx.beginPath(); //Çizim yolu başlatma
+        ctx.moveTo(basX, basY + (i*kutu)); //Her döngüde y bir kutu genişliği aşağı iner
+        ctx.lineTo(basX + (4*kutu), basY + (i*kutu)); //Yatay olarak sağa doğru çizim yapar
+        ctx.stroke(); //Belirlenen çizimi yapar
+    }
+
+    ctx.drawImage(sepet, ormanSinir, 20, sepetSinir-ormanSinir ,cvs.height-40); //Sepet çizimi
+
+     //Sepete bırakılan kopya çiz
+    yerlesmisEsyalar.forEach(kopya => {
+        ctx.drawImage(kopya.img, kopya.x, kopya.y, 60, 60); //Eşya görsellerini çizer
+        
+        //Eşyalara eklenecek ağırlıketiketinin konumunu belirler
+        let esyaX=kopya.x+48;
+        let esyaY=kopya.y+52;
+        
+        //Envanterlerin yanına daire çiziyoruz
+        ctx.fillStyle="rgba(139,69,19,0.9)"; 
+        ctx.beginPath();
+        ctx.arc(esyaX, esyaY, 12, 0, Math.PI * 2);
+        ctx.fill();
+
+        //Ağırlık değerlerini dairelerin içine yazmak için
+        ctx.fillStyle="white";
+        ctx.font="12px Arial";
+        ctx.textAlign="center";
+        ctx.fillText(kopya.agirlik, esyaX, esyaY+4); //Ağırlıkları dairenin ortasına yazdık
+    });
+
+    ctx.restore(); //Kaydedilen duruma geri dönme
+
+    if(secili){
+        ctx.drawImage(secili.img, secili.x, secili.y, 60, 60); //Secili nesneyi çizer
+    }
+
+    //Envanter alanı çizimi
+    ctx.fillStyle="rgba(255, 248, 220, 0.8)";
+    ctx.fillRect(sepetSinir-10, 10, cvs.width-sepetSinir-35, cvs.height-30);
+
+    //Envanter baslık çizim
+    ctx.fillStyle="#8B4513";
+    ctx.font="bold 20px Arial";
+    ctx.textAlign="center";
+    ctx.fillText("Malzemeler", sepetSinir+70, 30);
+
+    //Envanter eşyalarını çizme
+    envanter.forEach(item => {
+        ctx.drawImage(item.img, item.x, item.y, 60, 60);
+
+        let etiketX = item.x + 48; //Etiketin x koordinatı (eşyanın ortası)
+        let etiketY = item.y + 52; //Etiketin y koordinatı (eşyanın altı)
+        
+        //Envanterlerin yanına daire çiziyoruz
+        ctx.fillStyle="rgba(139,69,19,0.9)"; 
+        ctx.beginPath();
+        ctx.arc(etiketX, etiketY, 12, 0, Math.PI * 2);
+        ctx.fill();
+
+        //Ağırlık değerlerini dairelerin içine yazmak için
+        ctx.fillStyle="white";
+        ctx.font="12px Arial";
+        ctx.textAlign="center";
+        ctx.fillText(item.agirlik, etiketX, etiketY+4); //Ağırlıkları dairenin ortasına yazdık
+    });
+
+    //Winnie hareket ettirme
+    winnieX+=0.3; //Winnie'nin hareket hızı
+
+    if(winnieX > ormanSinir - 120){
+        winnieX = 10; //Winnie'nin başlangıç konumuna geri dönmesi
+    }
+    ctx.drawImage(winnie, winnieX-50, winnieY-50, 300, 300); //Hareket eden winnie çizimi
+}
+
+function dengeKontrolEt(){
+    let toplamMoment=0;
+
+    let sepetMerkeziX= ormanSinir + (sepetSinir-ormanSinir)/2; //Sepetin merkezinin x koordinatı
+
+    yerlesmisEsyalar.forEach(esya => {
+        //Eşyanın merkezinin sepet merkezine uzaklığı
+        let uzaklik= (esya.x + 30) - sepetMerkeziX;
+        //moment = ağırlık * uzaklık
+        toplamMoment += esya.agirlik * (uzaklik/10);
+    });
+    return toplamMoment;
+}
+
+//Oyunun çizimini yapar oyun bitmediyse düzenli olarak oyunu tekrar çalıştırır
+function oyunDongusu(){
+    draw();
+    if(!oyunBitti){
+        requestAnimationFrame(oyunDongusu); //Ekran her yenilendiğinde animasyon kodunun çalışmasını sağlar
+    }
+}
+
+//Sepete ürün yerleştiğinde her seferinde yerleşim yapılırken çalan sesin fonksiyonu
+function yerlesimSesi(){
+    yerlesim.currentTime=0; //Sesin her seferde baştan başlamasına sebep olur
+    yerlesim.play();
+}
+
+//Oyun kontrol için mouse hareketleri
+let secili=null;
+let sinirX=0;
+let sinirY=0;
+
+function fareOlaylari(){
+    //Eşyayı yakalama kodları
+   cvs.addEventListener("mousedown", function(event){
+   //Mouseta sadece sol tuşu kullanmayı kontrol eder
+    if(event.button !==0)
+        return;
+
+    //Farenin canvas içindeki kordinatlarını hesaplama(oyun alanına göre konumlanır)
+    let mouseX = event.clientX - cvs.getBoundingClientRect().left;
+    let mouseY = event.clientY - cvs.getBoundingClientRect().top;
+    
+    envanter.forEach(item => {
+        if(mouseX > item.x && mouseX < item.x + 60 && mouseY > item.y && mouseY < item.y + 60){ //Farenin ucu eşyanın üzerinde mi?
+            secili={ //Fare ile seçilen eşyanın özelliklerini seçili değişkenine kopyalar
+                img: item.img,
+                id: item.id,
+                x: item.x,
+                y: item.y,
+                agirlik: item.agirlik
+            };
+
+            //Eşyayı neresinden tuttuğumuzu hesaplar
+            sinirX=mouseX - item.x;
+            sinirY=mouseY - item.y;
+        }
+    });
+});
+
+//Eşyayı sürükleme kodları
+cvs.addEventListener("mousemove", function(event){
+    //Sadece seçili nesne varken çalışmasını sağlamak için
+    if(!secili) 
+        return; 
+
+    //Farenin canvas içindeki kordinatlarını hesaplama(oyun alanına göre konumlanır)
+    let mouseX = event.clientX - cvs.getBoundingClientRect().left;
+    let mouseY = event.clientY - cvs.getBoundingClientRect().top;
+    
+    //Nesnenin yeni kordinatları o anki konuma göre ayarlanır
+    secili.x=mouseX - sinirX;
+    secili.y=mouseY - sinirY;
+});
+
+//Eşyayı bırakma ve sabitleme kodları
+cvs.addEventListener("mouseup", function(){
+    if(secili){
+        if(secili.x< sepetSinir&& secili.x > ormanSinir){ //Seçili eşyanın sepetin bulunduğu bölgede olup olmadığını kontrol eder
+            //Sepetin yatay ve dikey olarak merkezini hesaplar
+            let sepetMerkeziX= ormanSinir+(sepetSinir-ormanSinir)/2;
+            let sepetMerkeziY=cvs.height/2;
+
+            //Bırakılan eşyaların sepet merkezinden uzaklıklarını hesaplarlar
+            let dx=secili.x-sepetMerkeziX;
+            let dy=secili.y-sepetMerkeziY;
+
+            //Sepetin eğikliği kadar kordinatı ters çevirerek malzeme sepetin içine sabitlenir, işlem bitince kordinat gerçek konumuna taşınır
+            let lokalX=dx*Math.cos(-mevcutHareket)-dy*Math.sin(-mevcutHareket)+sepetMerkeziX;
+            let lokalY=dx*Math.sin(-mevcutHareket)+dy*Math.cos(-mevcutHareket)+sepetMerkeziY;
+
+
+            //Eşyalar sepetteki kalıcı eşyalara eklenir
+            yerlesmisEsyalar.push({
+                img: secili.img,
+                x: lokalX,
+                y: lokalY,
+                agirlik: secili.agirlik
+            });
+            yerlesimSesi(); //Kutuyu bıraktığında yerleşim sesini çal
+
+            //Sepet tamamen dolunca oyunu yeniden başlatmak için
+            if(yerlesmisEsyalar.length>=20){
+            fon.pause(); //Müziği durdur
+            level.currentTime=0;
+            level.play();
+
+                //Kodların çalışmasını 0,5 saniye geciktirir
+                setTimeout(()=>{
+                    let moment = dengeKontrolEt(); //Dengeyi kontrol etmek için
+                    let dengeOrani = Math.max(0, 100 - (Math.abs(moment) / 500) * 100); //Torku başarı oranına dönüştürür
+                    //Hesaplanan başarı oranı yuvarlama yapılıp tebrik mesajı ile kullanıcıya gösterilir
+                    oyunSonuMesaj("Tebrikler! Sepeti başarı ile doldurdunuz. Başarı Oranınız: %" + Math.round(dengeOrani));
+                }, 500);
+            }
+        }
+    }
+    secili=null;
+    });
+}
+
+        //Denge sağlanamadığında veya sepet dolduğunda çıkan bilgilendirme için oluşturuldu
+        function oyunSonuMesaj(mesaj){
+        let sonYazi=document.getElementById("son-yazi");
+        let oyunSonuPanel=document.getElementById("oyun-sonu");
+
+        oyunBitti=true;
+        sonYazi.innerText=mesaj; //Görünen metni almak için kullandık
+        oyunSonuPanel.style.display="flex"; //Panelin esnek bir şekilde hizalanmasını sağlar
+        }
+
+        function tekrarOyna(){
+        //Oyun verilerini sıfırla
+        yerlesmisEsyalar=[];
+        secili=null;
+        sinirX=0;
+        sinirY=0;
+        oyunBitti=false;
+        winnieX=0;
+        mevcutHareket=0;
+
+        //Oyun sonu ekranda çıkan bilgilendirmeyi kapat
+        document.getElementById("oyun-sonu").style.display="none";
+        //arka fonu tekrar başlat
+        fon.currentTime=0;
+        fon.play();
+        oyunDongusu(); //Oyunu tekrar başlat
+        }
+        </script>
+    </body>
+</html>
+
