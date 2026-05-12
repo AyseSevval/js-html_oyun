@@ -1672,4 +1672,82 @@ Görsel Bağlılık: Eşyaları save() ve restore() arasına aldığında, onlar
 
 Önemli İpucu:
 Izgara (krem arka plan ve çizgiler) çizim kodlarını da mutlaka bu save-restore bloğunun içine, sepet çiziminden hemen sonraya koymalısın. Aksi takdirde sepet dönerken ızgara çizgileri arkada sabit ve yamuk duracaktır.
+## 14
+# Prompt 
+Readmeye görsel ve sesler assets olarak nasıl eklenir
+# Cevap
+GitHub deponuzda görsel ve seslerin kaynaklarını belirtmek ve Readme dosyasında bunları sergilemek, hem projenin profesyonelliği hem de aldığınız puanlar için çok kritiktir. Belgede belirtilen "kaynakların belirtilmesi"  ve "Readme'ye oyun içi görüntü ekleme"  kurallarına göre şu adımları izlemelisiniz:
 
+1. Görselleri (Görüntüleri) Readme'ye Ekleme
+
+Readme dosyasında oyun içi görüntülerin (screenshot) yer alması size **+10 puan** kazandırır.
+
+* **Klasörleme:** Öncelikle projenizde `resimler` veya `assets` isimli bir klasör oluşturun ve ekran görüntülerini oraya yükleyin.
+* **Markdown Kodu:** Readme dosyasına şu kodu yazarak görseli görüntüleyebilirsiniz:
+`![Alternatif Metin](dosya-yolu/resim-adi.png)`
+* *Örnek:* `![Oyun İçi Denge Durumu](resimler/denge-ekran.png)`
+
+
+
+---
+
+2. Ses Dosyalarını Belirtme
+
+Readme dosyasında ses dosyaları (mp3/wav) doğrudan "oynatılabilir" şekilde eklenmez (GitHub bunu standart olarak desteklemez). Ancak seslerin varlığını ve kaynaklarını şu şekilde eklemelisiniz:
+
+* **Özellik Listesi:** Readme içinde bir başlık açarak hangi seslerin kullanıldığını belirtin:
+* 
+**Arka Plan Müziği:** `sesler/fon.mp3` 
+
+
+* 
+**Etkileşim Sesi:** `sesler/yerlesim.mpeg` 
+
+
+
+
+* 
+**Kaynak Gösterme:** Kendinize ait olmayan tüm seslerin kaynaklarını Readme'nin en altında belirtmelisiniz.
+
+
+* 
+*Örnek:* `Ses Efektleri: [Zapsplat.com](https://www.zapsplat.com) üzerinden temin edilmiştir.` 
+
+
+
+
+
+---
+
+ 3. Varlıkların (Assets) Kaynakçası
+
+Belgeye göre, **kendinize ait olmayan tüm assetlerin kaynaklarını** Readme dosyanızın en altında belirtmek zorundasınız. Bu bölüme şunları ekleyin:
+
+* 
+**Görsel Kaynaklar:** Karakterler, arka plan veya eşya ikonlarını nereden aldığınızı yazın (Örn: "Disney Assets" veya "Flaticon").
+
+
+* 
+**Ses Kaynakları:** Müzik ve efektlerin linklerini veya lisans bilgilerini ekleyin.
+
+
+* 
+**Orijinal Oyun:** Seçtiğiniz oyunun ismini ve bağlantısını (itch.io linki) eklemeyi unutmayın.
+
+
+
+---
+
+ 4. Önemli Hatırlatma: AI.md Dosyası
+
+Görselleri ve sesleri eklerken veya kodlarken yapay zekadan (Gemini gibi) yardım aldıysanız, bu **kullanım biçimini ve tüm promptları** `AI.md` isimli ayrı bir dosyada bildirmelisiniz. Tamamen yapay zekaya yaptırılmış ve belgelenmemiş projeler geçersiz sayılacaktır.
+
+**Özet Kontrol Listesi:**
+
+* En az 2 oyun içi görüntü eklendi mi? 
+
+
+* Tüm dış kaynaklı assetlerin linkleri en altta belirtildi mi? 
+
+
+* Orijinal oyunun linki eklendi mi?
