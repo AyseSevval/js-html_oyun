@@ -36,7 +36,7 @@
             #giris{
                 width: 100%;
                 height: 100%;
-                background-image: url('resimler/giris.webp');
+                background-image: url('assets/görseller/giris.webp');
                 background-size: cover;
                 background-position: center;
                 display: flex;
@@ -196,13 +196,13 @@ const winnie= new Image();
 
 //Envanter nesne tanımlamaları 
 let envanter=[
-    {id:"balkavanozu", img:new Image(), src:"resimler/balkavanozu.png", agirlik: 15},
-    {id:"tiggeryay", img:new Image(), src:"resimler/tiggeryay.png", agirlik: 9},
-    {id:"pigletatki", img:new Image(), src:"resimler/pigletatkı.png", agirlik: 5},
-    {id:"tavsanhavuc", img:new Image(), src:"resimler/tavsanhavuc.png", agirlik: 3},
-    {id:"kangurubalon", img:new Image(), src:"resimler/kangurubalon.png", agirlik: 1},
-    {id:"eeyorekuyruk", img:new Image(), src:"resimler/eeyorekuyruk.png", agirlik: 11},
-    {id:"baykusgozluk", img:new Image(), src:"resimler/baykusgozluk.png", agirlik: 7},
+    {id:"balkavanozu", img:new Image(), src:"assets/görseller/balkavanozu.png", agirlik: 15},
+    {id:"tiggeryay", img:new Image(), src:"assets/görseller/tiggeryay.png", agirlik: 9},
+    {id:"pigletatki", img:new Image(), src:"assets/görseller/pigletatkı.png", agirlik: 5},
+    {id:"tavsanhavuc", img:new Image(), src:"assets/görseller/tavsanhavuc.png", agirlik: 3},
+    {id:"kangurubalon", img:new Image(), src:"assets/görseller/kangurubalon.png", agirlik: 1},
+    {id:"eeyorekuyruk", img:new Image(), src:"assets/görseller/eeyorekuyruk.png", agirlik: 11},
+    {id:"baykusgozluk", img:new Image(), src:"assets/görseller/baykusgozluk.png", agirlik: 7},
 ]
 
 //Resim yükleme kontrolü
@@ -218,13 +218,13 @@ function resimYuklendi(){
     }
 
 //Karakter, arka plan ve envanter resimleri yükleme
-winnie.src="resimler/pooh.png";
+winnie.src="assets/görseller/pooh.png";
 winnie.onload = resimYuklendi;
 
-arkaplan.src="./resimler/arkaplan.jpg";
+arkaplan.src="assets/görseller/arkaplan.jpg";
 arkaplan.onload = resimYuklendi;
 
-sepet.src="./resimler/sepet1.png";
+sepet.src="assets/görseller/sepet1.png";
 sepet.onload = resimYuklendi;
 
 envanter.forEach(item => {
@@ -240,14 +240,14 @@ fon.volume=1;
 fon.preload="auto"; //Sesi önceden yükleriz
 
 let yerlesim=new Audio();
-yerlesim.src="sesler/yerlesim.mp3";
+yerlesim.src="assets/sesler/yerlesim.mp3";
 
 let level=new Audio();
-level.src="sesler/level.mp3";
+level.src="assets/sesler/level.mp3";
 level.volume=1;
 
 let bitis=new Audio();
-bitis.src="sesler/bitis.mp3";
+bitis.src="assets/sesler/bitis.mp3";
 
 let yerlesmisEsyalar=[];
 //Sabit kutu boyutu ve envanter genişliği tanımladık
