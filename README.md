@@ -3,7 +3,7 @@
 Winnie ve Arkadaşları piknik yapmak için ormana gidecekler fakat piknik sepetine eşyalarını yerleştirmeleri gerekiyor. Eşyaları düzgün yerleştirmezlerse piknik sepeti devrilecek. Bu oyun, denge ve strateji üzerine kurulu bir oyundur.
 <br> 
 <h2>Canlı Demo</h2>
-Oyunun çalışan haline ulaşmak için tıklayın: 
+Oyunun çalışan haline ulaşmak için tıklayın: https://aysesevval.github.io/js-html_oyun/
 <br>
 <h2>Oyunun Temel Amacı ve Kurallar</h2>
 Oyundaki temel amaç, sepetin dengesini koruyarak sağ tarafta bulunan malzemeler bölümündeki farklı ağırlıklardaki eşyaları sepetin içinde istediği noktalara yerleştirmektir. Bu yerleşime göre, sepet merkeze olan uzaklık ve konulan eşyanın ağırlığına göre sağa veya sola yatar. <br> 
