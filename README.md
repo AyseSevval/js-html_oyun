@@ -53,14 +53,14 @@ Proje sunucu gerektirmez, doğrudan tarayıcıda açabilirsiniz. Projeyi klonlay
 <img src="assets/görseller/baykusgozluk.png" width="300" height="200">
 
 <h4>Sesler</h4>
-<audio controls>
-   <source src="assets/sesler/fon.mp3" type="audio/mpeg">
-   <source src="assets/sesler/yerlesim.mp3" type="audio/mpeg">
-   <source src="assets/sesler/level.mp3" type="audio/mpeg">
-   <source src="assets/sesler/bitis.mp3" type="audio/mpeg">
-</audio>
+## 🎵 Ses Dosyaları Listesi
 
-
+| Ses Tanımı | Dosya Bağlantısı |
+| :--- | :--- |
+| **Fon Müziği** | [Dinlemek için tıklayın](assets/sesler/fon.mp3) |
+| **Yerleşim Sesi** | [Dinlemek için tıklayın](assets/sesler/yerlesim.mp3) |
+| **Level Atlama** | [Dinlemek için tıklayın](assets/sesler/level.mp3) |
+| **Bitiş Sesi** | [Dinlemek için tıklayın](assets/sesler/bitis.mp3) |
 
 
 
