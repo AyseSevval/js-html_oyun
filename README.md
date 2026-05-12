@@ -40,29 +40,26 @@ Proje sunucu gerektirmez, doğrudan tarayıcıda açabilirsiniz. Projeyi klonlay
 
 <h2>Projede Kullanılan Görseller ve Sesler</h2>
 <h4>Görseller</h4>
-<img src="assets/görseller/arkaplan.jpg" width="300" height="200">
-<img src="assets//görseller/giris.webp" width="300" height="200">
-<img src="assets/görseller/sepet1.png" width="300" height="200">
-<img src="assets/görseller/pooh.png" width="300" height="200">
-<img src="assets/görseller/balkavanozu.png" width="300" height="200">
-<img src="assets/görseller/tiggeryay.png" width="300" height="200">
-<img src="assets/görseller/pigletatkı.png" width="300" height="200">
-<img src="assets/görseller/tavsanhavuc.png" width="300" height="200">
-<img src="assets/görseller/kangurubalon.png" width="300" height="200">
-<img src="assets/görseller/eeyorekuyruk.png" width="300" height="200">
-<img src="assets/görseller/baykusgozluk.png" width="300" height="200">
+## 🖼️ Proje Görselleri (Harici Bağlantılar)
 
+| Önizleme | Varlık Adı | Görsel Bağlantısı |
+| :---: | :--- | :--- |
+| <img src="assets/görseller/pooh.png" width="50"> | **Pooh** | [Görseli Aç](http://tr.pinterest.com/pin/172473860715872274/) |
+| <img src="assets/görseller/arkaplan.jpg" width="50"> | **Arka Plan** | [Görseli Aç](https://tr.pinterest.com/pin/31806741109630519/) |
+| <img src="assets/görseller/eeyorekuyruk.png" width="50"> | **Eeyorekuyruk** | [Görseli Aç](https://tr.pinterest.com/pin/67976275711103581/) |
+| <img src="assets//görseller/giris.webp" width="50"> | **Giris** | [Görseli Aç](https://cdn.britannica.com/24/213924-050-93FA0392/Television-publicity-still-Owl-Christopher-Robin-Kanga-Tigger-Eeyore-Winnie-the-Pooh-Piglet-1988.jpg) |
+<h6> Kalan tüm görseller yapay zeka aracı Gemini tarafından oluşturulmuştur.</h6>
 <h4>Sesler</h4>
 ## 🎵 Ses Dosyaları Listesi
 
-| Ses Tanımı | Dosya Bağlantısı |
-| :--- | :--- |
-| **Fon Müziği** | [Dinlemek için tıklayın](assets/sesler/fon.mp3) |
-| **Yerleşim Sesi** | [Dinlemek için tıklayın](assets/sesler/yerlesim.mp3) |
-| **Level Atlama** | [Dinlemek için tıklayın](assets/sesler/level.mp3) |
-| **Bitiş Sesi** | [Dinlemek için tıklayın](assets/sesler/bitis.mp3) |
+## 🎵 Ses Varlıkları (Harici Bağlantılar)
 
-
+| Oynatıcı (Önizleme) | Ses Adı | Doğrudan Bağlantı |
+| :---: | :--- | :--- |
+| <audio src="assets/sesler/fon.mp3"></audio> | **Fon Müziği** | [Dosyayı Aç / İndir](https://example.com/ses1.mp3) |
+| <audio src="assets/sesler/yerlesim.mp3"></audio> | **Yerleşim Sesi** | [Dosyayı Aç / İndir](https://example.com/ses2.mp3) |
+| <audio src="assets/sesler/level.mp3"></audio> | **Level Atlama** | [Dosyayı Aç / İndir](https://example.com/ses3.mp3) |
+| <audio src="assets/sesler/bitis.mp3"></audio> | **Bitiş Sesi** | [Dosyayı Aç / İndir](https://example.com/ses4.mp3) |
 
 
 
