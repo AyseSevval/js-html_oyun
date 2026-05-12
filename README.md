@@ -40,23 +40,26 @@ Proje sunucu gerektirmez, doğrudan tarayıcıda açabilirsiniz. Projeyi klonlay
 
 <h2>Projede Kullanılan Görseller ve Sesler</h2>
 <h4>Görseller</h4>
-![Arka Plan](assets/görseller/arkaplan.jpg) <br>
-![Giris](assets/görseller/giris.webp) <br>
-![Sepet](assets/görseller/sepet1.png) <br>
-![Pooh](assets/görseller/pooh.png) <br>
-![Bal Kavanozu](assets/görseller/balkavanozu.png) <br>
-![Tigger Yay](assets/görseller/tiggeryay.png) <br>
-![Piglet Atkı](assets/görseller/pigletatkı.png) <br>
-![Tavsan-Havuc](assets/görseller/tavsanhavuc.png) <br>
-![Kanguru Balon](assets/görseller/kangurubalon.png) <br>
-![Eeyore Kuyruk](assets/görseller/eeyorekuyruk.png) <br>
-![Baykus Gozluk](assets/görseller/baykusgozluk.png) <br>
+<img src="assets/görseller/arkaplan.jpg" width="300" height="200">
+<img src="assets//görseller/giris.webp" width="300" height="200">
+<img src="assets/görseller/sepet1.png" width="300" height="200">
+<img src="assets/görseller/pooh.png" width="300" height="200">
+<img src="assets/görseller/balkavanozu.png" width="300" height="200">
+<img src="assets/görseller/tiggeryay.png" width="300" height="200">
+<img src="assets/görseller/pigletatkı.png" width="300" height="200">
+<img src="assets/görseller/tavsanhavuc.png" width="300" height="200">
+<img src="assets/görseller/kangurubalon.png" width="300" height="200">
+<img src="assets/görseller/eeyorekuyruk.png" width="300" height="200">
+<img src="assets/görseller/baykusgozluk.png" width="300" height="200">
 
 <h4>Sesler</h4>
-[Fon Müziği](assets/sesler/fon.mp3) <br>
-[Yerleşim Sesi](assets/sesler/yerlesim.mp3) <br>
-[Tamamen Dolma Sesi](assets/sesler/level.mp3) <br>
-[Denge Kaybı Sesi](assets/sesler/bitis.mp3) <br>
+<audio controls>
+   <source src="assets/sesler/fon.mp3" type="audio/mpeg">
+   <source src="assets/sesler/yerlesim.mp3" type="audio/mpeg">
+   <source src="assets/sesler/level.mp3" type="audio/mpeg">
+   <source src="assets/sesler/bitis.mp3" type="audio/mpeg">
+</audio>
+
 
 
 
