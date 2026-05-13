@@ -56,11 +56,11 @@ Proje sunucu gerektirmez, doğrudan tarayıcıda açabilirsiniz. Projeyi klonlay
 
  | Ses Adı | Doğrudan Bağlantı |
  | :--- | :--- |
- | **Fon Müziği** | [Dosyayı Aç / İndir](https://example.com/ses1.mp3) |
- | **Yerleşim Sesi** | [Dosyayı Aç / İndir](https://example.com/ses2.mp3) |
- | **Level Atlama** | [Dosyayı Aç / İndir](https://example.com/ses3.mp3) |
- | **Bitiş Sesi** | [Dosyayı Aç / İndir](https://example.com/ses4.mp3) |
-
+ | **Fon Müziği** | [Dosyayı Aç / İndir](https://www.youtube.com/watch?v=H1VIhNYYkNE&list=RDH1VIhNYYkNE&start_radio=1) |
+ | **Yerleşim Sesi** | [Dosyayı Aç / İndir](https://native-ringtones.com/ringtone/Voyager_Notification_Sound_Galaxy_A30_Scv43_Samsung/) |
+ | **Level Atlama** | [Dosyayı Aç / İndir](https://www.youtube.com/watch?v=MyEVwtMnTDg&list=RDMyEVwtMnTDg&start_radio=1) |
+ | **Bitiş Sesi** | [Dosyayı Aç / İndir](https://pixabay.com/tr/sound-effects/film-ve-%c3%b6zel-efektler-negative-beeps-6008/) |
+<h6>Level atlama sesi fon müziğinin içindeki küçük bir kısımdır.</h6>
 
 
 
