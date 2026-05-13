@@ -39,7 +39,6 @@ Proje sunucu gerektirmez, doğrudan tarayıcıda açabilirsiniz. Projeyi klonlay
 <li>Noah’s Arks: https://diadas.itch.io/noahs-arks</li>
 
 <h2>Projede Kullanılan Görseller ve Sesler</h2>
-<h4>Görseller</h4>
 
 # Proje Görselleri (Harici Bağlantılar)
 
@@ -50,7 +49,6 @@ Proje sunucu gerektirmez, doğrudan tarayıcıda açabilirsiniz. Projeyi klonlay
 | <img src="assets/görseller/eeyorekuyruk.png" width="50"> | **Eeyorekuyruk** | [Görseli Aç](https://tr.pinterest.com/pin/67976275711103581/) |
 | <img src="assets//görseller/giris.webp" width="50"> | **Giris** | [Görseli Aç](https://cdn.britannica.com/24/213924-050-93FA0392/Television-publicity-still-Owl-Christopher-Robin-Kanga-Tigger-Eeyore-Winnie-the-Pooh-Piglet-1988.jpg) |
 <h6> Kalan tüm görseller yapay zeka aracı Gemini tarafından oluşturulmuştur.</h6>
-<h4>Sesler</h4>
 
 ## Ses Varlıkları (Harici Bağlantılar)
 
